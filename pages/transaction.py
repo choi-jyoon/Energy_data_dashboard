@@ -98,6 +98,7 @@ def energy_pie():
   plt.title('에너지원별 발전량 분포', color='white')
   st.pyplot(fig)
 
+st.subheader('에너지원 종류별 파이 및 전체 전력 거래량 추이')
 with st.container():
   col1, col2 = st.columns([1,2])
   with col1:

@@ -10,7 +10,6 @@ import googlemaps
 import re
 import numpy
 from datetime import datetime
-from pages import about, generation, transaction
 
 # 한글 폰트 경로 설정
 plt.rcParams['font.family'] ='Malgun Gothic'

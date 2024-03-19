@@ -11,7 +11,6 @@ with st.sidebar:
             
 st.write('''
 # Data_DashBoard
-Data_DashBoard with Python 
 
 ## 프로젝트 소개
 ### 신재생에너지 현황 대시보드 
@@ -29,5 +28,5 @@ Data_DashBoard with Python
 - 기능
     - 지도에서 발전소 위치 정보 확인
     - 에너지원 별 전력 거래량 그래프
-    - 발전소별로 일간 발전량 / 이용량 추이 그래프
+    - 발전소별 발전량 그래프
 ''')

@@ -277,31 +277,93 @@ def middle_mean_small():
     # Streamlit을 이용해 그래프 표시
     st.pyplot(fig)
     
+def dongseo_hour():
+    # 발전소 이름을 유니크하게 가져옵니다.
+    unique_plants = df_dongseo['발전기명'].unique()
+
+
+    # Streamlit에서 발전소를 선택할 수 있도록 드롭다운 메뉴를 생성합니다.
+    selected_plant = st.selectbox('발전소를 선택하세요:', unique_plants)
+
+    # 선택된 발전소에 대한 데이터만 필터링합니다.
+    filtered_data = df_dongseo[df_dongseo['발전기명'] == selected_plant]
+    columns_needed = ['일자', '발전기명','01시','02시','03시','04시','05시','06시','07시','08시','09시','10시','11시','12시','13시','14시','15시','16시','17시','18시','19시','20시','21시','22시','23시','24시']
+    filtered_data = filtered_data[columns_needed]
+
+    st.write(filtered_data)
+    
+def west_hour():
+    # 발전소 이름을 유니크하게 가져옵니다.
+    unique_plants = df_west['발전기명'].unique()
+
+
+    # Streamlit에서 발전소를 선택할 수 있도록 드롭다운 메뉴를 생성합니다.
+    selected_plant = st.selectbox('발전소를 선택하세요:', unique_plants)
+
+    # 선택된 발전소에 대한 데이터만 필터링합니다.
+    filtered_data = df_west[df_west['발전기명'] == selected_plant]
+    columns_needed = ['날짜', '발전기명','01시','02시','03시','04시','05시','06시','07시','08시','09시','10시','11시','12시','13시','14시','15시','16시','17시','18시','19시','20시','21시','22시','23시','24시']
+    filtered_data = filtered_data[columns_needed]
+
+    filtered_data
+    
+def middle_hour():
+    # 발전소 이름을 유니크하게 가져옵니다.
+    unique_plants = df_middle['발전기명'].unique()
+
+
+    # Streamlit에서 발전소를 선택할 수 있도록 드롭다운 메뉴를 생성합니다.
+    selected_plant = st.selectbox('발전소를 선택하세요:', unique_plants)
+
+    # 선택된 발전소에 대한 데이터만 필터링합니다.
+    filtered_data = df_middle[df_middle['발전기명'] == selected_plant]
+    columns_needed = ['년월일', '발전기명', '01시','02시','03시','04시','05시','06시','07시','08시','09시','10시','11시','12시','13시','14시','15시','16시','17시','18시','19시','20시','21시','22시','23시','24시']
+    filtered_data = filtered_data[columns_needed]
+
+    filtered_data
+    
 # 사용자 선택에 따른 마커 추가
 if loc == '서부발전':
     add_markers(df_west_location, energy_map_loc, 'blue')
+    st_folium.st_folium(energy_map_loc, width=600, height=700)
     with st.container():
+        st.subheader('발전소별 평균 발전량 안내')
         col1, col2 = st.columns([1, 1])  # 1:1 비율로 컬럼을 나눕니다.
         with col1:
             west_mean_small()
         with col2:
             west_mean()
+        st.subheader('발전소별 일간 발전량 안내')
+        west_hour()
+    
 elif loc == '동서발전':
     # add_markers(df_dongseo_location, energy_map_loc, 'red')
     with st.container():
+        st.subheader('발전소별 평균 발전량 안내')
+        
         col1, col2 = st.columns([1, 1])  # 1:1 비율로 컬럼을 나눕니다.
         with col1:
             dongseo_mean()
         with col2:
             add_markers(df_dongseo_location, energy_map_loc, 'red')
+            st_folium.st_folium(energy_map_loc, width=600, height=700)
+        st.subheader('발전소별 일간 발전량 안내')
+        dongseo_hour()
+    
 elif loc == '중부발전':
     add_markers(df_middle_location, energy_map_loc, 'green')
+    st_folium.st_folium(energy_map_loc, width=600, height=700)
     with st.container():
+        st.subheader('발전소별 평균 발전량 안내')
+        
         col1, col2 = st.columns([1, 1])  # 1:1 비율로 컬럼을 나눕니다.
         with col1:
             middle_mean_small()
         with col2:
             middle_mean()
+        st.subheader('발전소별 일간 발전량 안내')
+        middle_hour()
+    
 else:  # '전체보기' 선택 시
     with st.container():
         col1, col2 = st.columns([1, 1])  # 1:1 비율로 컬럼을 나눕니다.
@@ -309,23 +371,10 @@ else:  # '전체보기' 선택 시
             add_markers(df_dongseo_location, energy_map_loc, 'red')
             add_markers(df_west_location, energy_map_loc, 'blue')
             add_markers(df_middle_location, energy_map_loc, 'green')
+            st_folium.st_folium(energy_map_loc, width=600, height=700)
         with col2:
             # 여기서는 모든 발전소의 평균을 보여주는 함수를 호출할 수 있습니다.
             # 예를 들어, 전체 발전소 평균을 보여주는 함수가 있다면 여기에 넣을 수 있어요.
             pass
 
-
-# 지도를 Streamlit에 표시
-st_folium.st_folium(energy_map_loc, width=600, height=700)
-    
-# 발전소 이름을 유니크하게 가져옵니다.
-unique_plants = df_dongseo['발전기명'].unique()
-df_dongseo.drop('일자', axis=1)
-
-# Streamlit에서 발전소를 선택할 수 있도록 드롭다운 메뉴를 생성합니다.
-selected_plant = st.selectbox('발전소를 선택하세요:', unique_plants)
-
-# 선택된 발전소에 대한 데이터만 필터링합니다.
-filtered_data = df_dongseo[df_dongseo['발전기명'] == selected_plant]
-
-filtered_data
+st
