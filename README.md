@@ -37,3 +37,28 @@
 ---
 **streamlit app deploy**
 > https://energyboard.streamlit.app/
+
+---
+## 대시보드 내 세부 기능 미리보기 
+- **에너지원별 신재생에너지 파이차트와 연도별 전체 전력량**
+![에너지원 종류별 파이 및 전체 전력 거래량 추이](img/total%20energy%20graph.png)
+
+- **에너지원별 신재생에너지 파이차트와 연도별 전체 전력량**
+![연도별 전체 거래량 자세히 들여보기](img/yearly%20graph.png)
+
+- **에너지원별 신재생에너지 파이차트와 연도별 전체 전력량**
+![전체 발전소 위치 안내](img/location.png)
+
+- **에너지원별 신재생에너지 파이차트와 연도별 전체 전력량**
+![동서 발전소 위치 및 평균 발전량](img/dongseo%20location.png)
+
+- **에너지원별 신재생에너지 파이차트와 연도별 전체 전력량**
+![서부 발전소 위치](img/west_location.png)
+![서부 발전 평균 발전량](img/west_mean.png)
+
+- **에너지원별 신재생에너지 파이차트와 연도별 전체 전력량**
+![중부 발전소 위치](img/middle%20location.png)
+![중부 발전 평균 발전량](img/middle%20mean.png)
+
+- **에너지원별 신재생에너지 파이차트와 연도별 전체 전력량**
+![발전기별 일간 발전량 안내](img/daily%20graph.png)
