@@ -206,9 +206,6 @@ def west_mean():
     ax.set_xlabel('시간당 평균 발전량 (kWh)')
     ax.set_title('발전소별 평균 발전량')
     
-    # x축 눈금을 10개 단위로 조정합니다.
-    ticks_positions = np.arange(0, len(names), 5)  # 10개 단위로 위치를 설정합니다.
-    ticks_labels = names[::5]  # 10개 단위로 라벨을 설정합니다.
     plt.yticks(rotation=45, ha="right")
 
     # Streamlit을 이용해 그래프 표시
@@ -365,6 +362,4 @@ else:  # '전체보기' 선택 시
             add_markers(df_middle_location, energy_map_loc, 'green')
             st_folium.st_folium(energy_map_loc, width=600, height=700)
         with col2:
-            # 여기서는 모든 발전소의 평균을 보여주는 함수를 호출할 수 있습니다.
-            # 예를 들어, 전체 발전소 평균을 보여주는 함수가 있다면 여기에 넣을 수 있어요.
             pass
