@@ -1,14 +1,6 @@
 import streamlit as st
 
-with st.sidebar:
-    with st.container():
-        if st.button("프로젝트 소개"):
-            st.switch_page("pages/about.py")
-        if st.button("발전소 위치 및 시간대별 발전량"):
-            st.switch_page("pages/generation.py")
-        if st.button("전체 신재생에너지 발전량"):
-            st.switch_page("pages/transaction.py")
-            
+
 st.write('''
 # Data_DashBoard
 

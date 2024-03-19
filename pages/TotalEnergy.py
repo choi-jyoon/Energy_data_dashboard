@@ -14,15 +14,7 @@ import numpy
 from datetime import datetime
 
 st.set_page_config(layout="wide")
-with st.sidebar:
-    with st.container():
-        if st.button("프로젝트 소개"):
-            st.switch_page("pages/about.py")
-        if st.button("발전소 위치 및 시간대별 발전량"):
-            st.switch_page("pages/generation.py")
-        if st.button("전체 신재생에너지 발전량"):
-            st.switch_page("pages/transaction.py")
-         
+
          
 # 전력 거래량 데이터 가져오기
 @st.cache_data
@@ -54,24 +46,24 @@ del yearly_mean['합계']  # 중복되는 '합계' 열을 삭제합니다.
 
 def draw_yearly_mean_graph(yearly_mean):
     fig, ax = plt.subplots(figsize=(10, 3.25))
-    ax.set_facecolor('lightgray')
-    fig.patch.set_facecolor('lightgray') 
+    # ax.set_facecolor('lightgray')
+    # fig.patch.set_facecolor('lightgray') 
     ax.bar(yearly_mean['연도'], yearly_mean['연도별 평균'], color='skyblue')
     ax.set_title('연도별 평균 거래량 추이')
-    ax.set_xlabel('연도', color ='white')
+    ax.set_xlabel('연도')
     ax.set_ylabel('연도별 평균 거래량 (MWh)')
     plt.xticks(rotation=45)  # x축 레이블 회전
-    plt.grid(axis='y', color='gray')
+    plt.grid(axis='y')
     plt.tight_layout()
     st.pyplot(fig)
 
 def draw_monthly_total_graph(month_mean):
     fig, ax = plt.subplots(figsize=(30, 6))
-    ax.set_facecolor('lightgray')  
-    fig.patch.set_facecolor('lightgray') 
+    # ax.set_facecolor('lightgray')  
+    # fig.patch.set_facecolor('lightgray') 
     ax.plot(month_mean['기간'], month_mean['합계'], marker='o', linestyle='-', color='b')
     ax.set_title('월별 전체 전력 거래량 (단위: MWh)')
-    ax.set_xlabel('기간', color='white')
+    ax.set_xlabel('기간')
     ax.set_ylabel('월별 전체 거래량')
     plt.grid(True)
     plt.xticks(rotation=45)  # x축 레이블 회전
@@ -88,14 +80,14 @@ def energy_pie():
   wedges, texts, autotexts = ax.pie(df_energy_mean['평균'], labels=df_energy_mean['에너지원'],
                                     autopct='%1.1f%%', shadow=False, startangle=90)
   
-  # 레이블과 autopct의 글자 색 변경
-  for text in texts:
-      text.set_color('white')
-  for autotext in autotexts:
-      autotext.set_color('white')
+  # # 레이블과 autopct의 글자 색 변경
+  # for text in texts:
+  #     text.set_color('white')
+  # for autotext in autotexts:
+  #     autotext.set_color('white')
       
   ax.axis('equal')
-  plt.title('에너지원별 발전량 분포', color='white')
+  plt.title('에너지원별 발전량 분포')
   st.pyplot(fig)
 
 st.subheader('에너지원 종류별 파이 및 전체 전력 거래량 추이')

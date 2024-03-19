@@ -18,15 +18,7 @@ API_KEY = os.getenv('google_api_key')
 g_map = googlemaps.Client(key = API_KEY)
 
 st.set_page_config(layout="wide")
-with st.sidebar:
-    with st.container():
-        if st.button("프로젝트 소개"):
-            st.switch_page("pages/about.py")
-        if st.button("발전소 위치 및 시간대별 발전량"):
-            st.switch_page("pages/generation.py")
-        if st.button("전체 신재생에너지 발전량"):
-            st.switch_page("pages/transaction.py")
-         
+
 st.subheader("주요 발전소 위치 안내")
 # 전력 거래량 데이터 가져오기
 @st.cache_data
@@ -376,5 +368,3 @@ else:  # '전체보기' 선택 시
             # 여기서는 모든 발전소의 평균을 보여주는 함수를 호출할 수 있습니다.
             # 예를 들어, 전체 발전소 평균을 보여주는 함수가 있다면 여기에 넣을 수 있어요.
             pass
-
-st
