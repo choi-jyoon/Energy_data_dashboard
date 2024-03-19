@@ -279,7 +279,7 @@ def dongseo_hour():
 
     # 선택된 발전소에 대한 데이터만 필터링합니다.
     filtered_data = df_dongseo[df_dongseo['발전기명'] == selected_plant]
-    columns_needed = ['일자', '발전기명','01시','02시','03시','04시','05시','06시','07시','08시','09시','10시','11시','12시','13시','14시','15시','16시','17시','18시','19시','20시','21시','22시','23시','24시']
+    columns_needed = ['일자', '01시','02시','03시','04시','05시','06시','07시','08시','09시','10시','11시','12시','13시','14시','15시','16시','17시','18시','19시','20시','21시','22시','23시','24시']
     filtered_data = filtered_data[columns_needed]
 
     st.write(filtered_data)
@@ -294,7 +294,7 @@ def west_hour():
 
     # 선택된 발전소에 대한 데이터만 필터링합니다.
     filtered_data = df_west[df_west['발전기명'] == selected_plant]
-    columns_needed = ['날짜', '발전기명','01시','02시','03시','04시','05시','06시','07시','08시','09시','10시','11시','12시','13시','14시','15시','16시','17시','18시','19시','20시','21시','22시','23시','24시']
+    columns_needed = ['날짜', '01시','02시','03시','04시','05시','06시','07시','08시','09시','10시','11시','12시','13시','14시','15시','16시','17시','18시','19시','20시','21시','22시','23시','24시']
     filtered_data = filtered_data[columns_needed]
 
     filtered_data
@@ -309,7 +309,7 @@ def middle_hour():
 
     # 선택된 발전소에 대한 데이터만 필터링합니다.
     filtered_data = df_middle[df_middle['발전기명'] == selected_plant]
-    columns_needed = ['년월일', '발전기명', '01시','02시','03시','04시','05시','06시','07시','08시','09시','10시','11시','12시','13시','14시','15시','16시','17시','18시','19시','20시','21시','22시','23시','24시']
+    columns_needed = ['년월일', '01시','02시','03시','04시','05시','06시','07시','08시','09시','10시','11시','12시','13시','14시','15시','16시','17시','18시','19시','20시','21시','22시','23시','24시']
     filtered_data = filtered_data[columns_needed]
 
     filtered_data
@@ -325,7 +325,7 @@ if loc == '서부발전':
             west_mean_small()
         with col2:
             west_mean()
-        st.subheader('발전소별 일간 발전량 안내')
+        st.subheader('발전기별 일간 발전량 안내')
         west_hour()
     
 elif loc == '동서발전':
@@ -339,7 +339,7 @@ elif loc == '동서발전':
         with col2:
             add_markers(df_dongseo_location, energy_map_loc, 'red')
             st_folium.st_folium(energy_map_loc, width=600, height=700)
-        st.subheader('발전소별 일간 발전량 안내')
+        st.subheader('발전기별 일간 발전량 안내')
         dongseo_hour()
     
 elif loc == '중부발전':
@@ -353,7 +353,7 @@ elif loc == '중부발전':
             middle_mean_small()
         with col2:
             middle_mean()
-        st.subheader('발전소별 일간 발전량 안내')
+        st.subheader('발전기별 일간 발전량 안내')
         middle_hour()
     
 else:  # '전체보기' 선택 시
