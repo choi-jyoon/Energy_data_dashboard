@@ -140,7 +140,7 @@ def dongseo_mean():
     groupby_region = df_dongseo.groupby('발전기명')
 
     # Matplotlib을 이용해 그래프를 준비합니다.
-    fig, ax = plt.subplots(figsize=(6, 10))
+    fig, ax = plt.subplots(figsize=(2,3))
 
     # 발전소별 평균 발전량을 저장할 리스트
     names = []
@@ -153,10 +153,40 @@ def dongseo_mean():
         averages.append(average_production)
 
     # 그래프 그리기
-    ax.barh(names, averages)
+    ax.barh(names, averages, color = 'red')
     ax.set_ylabel('발전소 이름')
     ax.set_xlabel('시간당 평균 발전량 (kWh)')
     ax.set_title('발전소별 평균 발전량')
+    plt.yticks(rotation=45, ha="right")
+
+    # Streamlit을 이용해 그래프 표시
+    st.pyplot(fig)
+    
+def west_mean_small():
+    groupby_region = df_west.groupby('발전기명')
+
+    # Matplotlib을 이용해 그래프를 준비합니다.
+    fig, ax = plt.subplots(figsize=(4,6))
+
+    threshold = 8000000
+    names = []
+    averages = []
+
+    for name, group in groupby_region:
+        if group['합계'].mean() < threshold and group['합계'].mean() > 2500000:
+            average_production = group['합계'].mean()  # 시간당 평균 발전량 계산
+            names.append(name)
+            averages.append(average_production)
+
+    # 그래프 그리기
+    ax.barh(names, averages, color = 'skyblue')
+    ax.set_ylabel('발전소 이름')
+    ax.set_xlabel('시간당 평균 발전량 (kWh)')
+    ax.set_title('발전소별 평균 발전량')
+    
+    # x축 눈금을 10개 단위로 조정합니다.
+    ticks_positions = np.arange(0, len(names), 5)  # 10개 단위로 위치를 설정합니다.
+    ticks_labels = names[::5]  # 10개 단위로 라벨을 설정합니다.
     plt.yticks(rotation=45, ha="right")
 
     # Streamlit을 이용해 그래프 표시
@@ -166,9 +196,9 @@ def west_mean():
     groupby_region = df_west.groupby('발전기명')
 
     # Matplotlib을 이용해 그래프를 준비합니다.
-    fig, ax = plt.subplots(figsize=(6, 10))
+    fig, ax = plt.subplots(figsize=(4,6))
 
-    threshold = 10000000
+    threshold = 8000000
     names = []
     averages = []
 
@@ -179,7 +209,7 @@ def west_mean():
             averages.append(average_production)
 
     # 그래프 그리기
-    ax.barh(names, averages)
+    ax.barh(names, averages, color = 'skyblue')
     ax.set_ylabel('발전소 이름')
     ax.set_xlabel('시간당 평균 발전량 (kWh)')
     ax.set_title('발전소별 평균 발전량')
@@ -196,9 +226,9 @@ def middle_mean():
     groupby_region = df_middle.groupby('발전기명')
 
     # Matplotlib을 이용해 그래프를 준비합니다.
-    fig, ax = plt.subplots(figsize=(6, 10))
+    fig, ax = plt.subplots(figsize=(4,6))
 
-    threshold = 5000000
+    threshold = 10000000
     names = []
     averages = []
 
@@ -210,7 +240,7 @@ def middle_mean():
             averages.append(average_production)
 
     # 그래프 그리기 - 여기서 x, y축을 바꿉니다.
-    ax.barh(names, averages)
+    ax.barh(names, averages, color = 'green')
     ax.set_ylabel('발전소 이름')
     ax.set_xlabel('시간당 평균 발전량 (kWh)')
     ax.set_title('발전소별 평균 발전량')
@@ -219,35 +249,70 @@ def middle_mean():
     # Streamlit을 이용해 그래프 표시
     st.pyplot(fig)
 
+   
+def middle_mean_small():
+    groupby_region = df_middle.groupby('발전기명')
+
+    # Matplotlib을 이용해 그래프를 준비합니다.
+    fig, ax = plt.subplots(figsize=(4,6))
+
+    threshold = 10000000
+    names = []
+    averages = []
+
+    for name, group in groupby_region:
+        hours_data = group.iloc[:, 5:]  # '방전' 컬럼 이후의 모든 컬럼 선택
+        if hours_data.mean(axis=1).mean() < threshold:
+            average_production = hours_data.mean(axis=1).mean()  # 시간당 평균 발전량 계산
+            names.append(name)
+            averages.append(average_production)
+
+    # 그래프 그리기 - 여기서 x, y축을 바꿉니다.
+    ax.barh(names, averages, color = 'green')
+    ax.set_ylabel('발전소 이름')
+    ax.set_xlabel('시간당 평균 발전량 (kWh)')
+    ax.set_title('발전소별 평균 발전량')
+    plt.yticks(rotation=45, ha="right")
+
+    # Streamlit을 이용해 그래프 표시
+    st.pyplot(fig)
     
 # 사용자 선택에 따른 마커 추가
 if loc == '서부발전':
+    add_markers(df_west_location, energy_map_loc, 'blue')
     with st.container():
-        col1, col2 = st.columns(2)
+        col1, col2 = st.columns([1, 1])  # 1:1 비율로 컬럼을 나눕니다.
         with col1:
-            add_markers(df_west_location, energy_map_loc, 'blue')
+            west_mean_small()
         with col2:
             west_mean()
 elif loc == '동서발전':
+    # add_markers(df_dongseo_location, energy_map_loc, 'red')
     with st.container():
-        col1, col2 = st.columns(2)
+        col1, col2 = st.columns([1, 1])  # 1:1 비율로 컬럼을 나눕니다.
         with col1:
-            add_markers(df_dongseo_location, energy_map_loc, 'red')
-        with col2:
             dongseo_mean()
+        with col2:
+            add_markers(df_dongseo_location, energy_map_loc, 'red')
 elif loc == '중부발전':
+    add_markers(df_middle_location, energy_map_loc, 'green')
     with st.container():
-        col1, col2 = st.columns(2)
+        col1, col2 = st.columns([1, 1])  # 1:1 비율로 컬럼을 나눕니다.
         with col1:
-            add_markers(df_middle_location, energy_map_loc, 'green')
+            middle_mean_small()
         with col2:
             middle_mean()
 else:  # '전체보기' 선택 시
-    add_markers(df_dongseo_location, energy_map_loc, 'red')
-    add_markers(df_west_location, energy_map_loc, 'blue')
-    add_markers(df_middle_location, energy_map_loc, 'green')
-    
-    
+    with st.container():
+        col1, col2 = st.columns([1, 1])  # 1:1 비율로 컬럼을 나눕니다.
+        with col1:
+            add_markers(df_dongseo_location, energy_map_loc, 'red')
+            add_markers(df_west_location, energy_map_loc, 'blue')
+            add_markers(df_middle_location, energy_map_loc, 'green')
+        with col2:
+            # 여기서는 모든 발전소의 평균을 보여주는 함수를 호출할 수 있습니다.
+            # 예를 들어, 전체 발전소 평균을 보여주는 함수가 있다면 여기에 넣을 수 있어요.
+            pass
 
 
 # 지도를 Streamlit에 표시
